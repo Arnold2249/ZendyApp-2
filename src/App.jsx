@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import quotesData from './data/quotes.json';
 
-import { FaSun, FaCloudSun, FaCloud, FaCloudRain, FaBolt, FaSnowflake, FaSmog, FaQuestion } from 'react-icons/fa';
+import { FaSun, FaCloudSun, FaCloud, FaCloudRain, FaBolt, FaSnowflake, FaSmog, FaQuestion, FaSpinner } from 'react-icons/fa';
 
 import Header from './components/Header';
 import QuoteBox from './components/QuoteBox';
@@ -52,7 +52,7 @@ const App = () => {
     city: 'Loading...',
     temperature: '--°C',
     description: '--',
-    icon: null
+    icon: <FaSpinner className="animate-spin" />
   });
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [currentTime, setCurrentTime] = useState(new Date());
