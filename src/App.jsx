@@ -10,6 +10,7 @@ import Stats from './components/Stats';
 import Clock from './components/Clock';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
+import Auth from './components/Auth';
 // Helper functions for time and calendar
 const monthNames = [
   "January", "February", "March", "April", "May", "June",
@@ -59,9 +60,7 @@ const App = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editingText, setEditingText] = useState('');
   const draggedItemRef = useRef(null);
-  const [reminders, setReminders] = useState([]);
-  const [reminderDate, setReminderDate] = useState(null);
-  const [reminderText, setReminderText] = useState('');
+  const [reminders] = useState([]);
 
   // Logout handler
   const handleLogout = () => {
