@@ -129,6 +129,7 @@ const App = () => {
     setTaskType('study');
   };
 
+
   const toggleTaskComplete = (taskId) => {
     setTasks(tasks.map(task =>
       task.id === taskId ? { ...task, completed: !task.completed } : task
@@ -163,6 +164,35 @@ const App = () => {
     setEditingText('');
   };
 
+    //DRAG AND DROP FEATURE 
+  const handleDragStart = (e, taskId) => {
+  draggedItemRef.current = taskId;
+};
+
+const handleDragOver = (e) => {
+  e.preventDefault();
+};
+
+const handleDrop = (e, targetTaskId) => {
+  const draggedId = draggedItemRef.current;
+  if (draggedId === targetTaskId) return;
+
+  const draggedIndex = tasks.findIndex(task => task.id === draggedId);
+  const targetIndex = tasks.findIndex(task => task.id === targetTaskId);
+
+  if (draggedIndex === -1 || targetIndex === -1) return;
+
+  const updatedTasks = [...tasks];
+  const [draggedTask] = updatedTasks.splice(draggedIndex, 1);
+  updatedTasks.splice(targetIndex, 0, draggedTask);
+
+  setTasks(updatedTasks);
+  draggedItemRef.current = null;
+};
+
+const handleDragEnd = () => {
+  draggedItemRef.current = null;
+};
   // Motivational quote
   const fetchMotivationalQuote = () => {
     setQuote({ text: 'Loading motivational quote...', author: '- Author' });
@@ -383,7 +413,12 @@ const getWeatherIcon = (code) => {
               </div>
               <div className="task-list overflow-y-auto" style={{ maxHeight: '500px' }}>
                 <TaskList
-                  tasks={sortedTasks}
+                  tasks={tasks}
+                  draggedItemRef={draggedItemRef} //drag and drop feature
+                  handleDragStart={handleDragStart}
+                  handleDragOver={handleDragOver}
+                  handleDrop={handleDrop}
+                  handleDragEnd={handleDragEnd} //drag and drop feature
                   editingTaskId={editingTaskId}
                   editingText={editingText}
                   startEditing={startEditing}
